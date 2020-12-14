@@ -295,9 +295,6 @@
 /* Define this symbol to build in assembly routines */
 //#define USE_ASM 1
 
-/* Define if dbus support should be compiled in */
-/* #undef USE_DBUS */
-
 /* Define if QR support should be compiled in */
 //#define USE_QRCODE 1
 
