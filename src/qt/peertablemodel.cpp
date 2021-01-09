@@ -29,6 +29,8 @@ bool NodeLessThan::operator()(const CNodeCombinedStats &left, const CNodeCombine
         return pLeft->nodeid < pRight->nodeid;
     case PeerTableModel::Address:
         return pLeft->addrName.compare(pRight->addrName) < 0;
+    case PeerTableModel::Direction:
+        return pLeft->fInbound > pRight->fInbound;
     case PeerTableModel::Network:
         return pLeft->m_network < pRight->m_network;
     case PeerTableModel::Ping:
@@ -161,8 +163,9 @@ QVariant PeerTableModel::data(const QModelIndex &index, int role) const
         case NetNodeId:
             return (qint64)rec->nodeStats.nodeid;
         case Address:
-            // prepend to peer address down-arrow symbol for inbound connection and up-arrow for outbound connection
-            return QString(rec->nodeStats.fInbound ? "↓ " : "↑ ") + QString::fromStdString(rec->nodeStats.addrName);
+            return QString::fromStdString(rec->nodeStats.addrName);
+        case Direction:
+            return QString(rec->nodeStats.fInbound ? "Inbound" : "Outbound");
         case Network:
             return GUIUtil::NetworkToQString(rec->nodeStats.m_network);
         case Ping:
@@ -176,6 +179,7 @@ QVariant PeerTableModel::data(const QModelIndex &index, int role) const
         }
     } else if (role == Qt::TextAlignmentRole) {
         switch (index.column()) {
+            case Direction:
             case Network:
                 return QVariant(Qt::AlignCenter);
             case Ping:
