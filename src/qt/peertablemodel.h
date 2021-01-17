@@ -59,6 +59,7 @@ public:
     void startAutoRefresh();
     void stopAutoRefresh();
 
+    // See also RPCConsole::ColumnWidths in rpcconsole.h
     enum ColumnIndex {
         NetNodeId = 0,
         Direction,
@@ -90,7 +91,7 @@ private:
     const PlatformStyle& m_platform_style;
     void DrawIcons();
     QIcon m_icon_conn_in, m_icon_conn_out;
-    const QStringList columns{tr("Peer Id"), "", tr("Address"), tr("Type"), tr("Network"), tr("Ping"), tr("Sent"), tr("Received"), tr("User Agent")};
+    const QStringList columns{tr("id", "Peer table, referring to node id"), "", tr("Address"), tr("Type"), tr("Network"), tr("Ping"), tr("Sent"), tr("Received"), tr("User Agent")};
     std::unique_ptr<PeerTablePriv> priv;
     QTimer *timer;
 };

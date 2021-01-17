@@ -34,6 +34,7 @@
 
 #include <QDateTime>
 #include <QFont>
+#include <QFontMetrics>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QMessageBox>
@@ -595,7 +596,15 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         ui->peerWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
         ui->peerWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
         ui->peerWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+
+        const QFontMetrics fm = ui->peerWidget->fontMetrics();
+        ui->peerWidget->setColumnWidth(PeerTableModel::NetNodeId, GUIUtil::TextWidth(fm, "99999"));
+        ui->peerWidget->setColumnWidth(PeerTableModel::Direction, DIRECTION_COLUMN_WIDTH);
         ui->peerWidget->setColumnWidth(PeerTableModel::Address, ADDRESS_COLUMN_WIDTH);
+        ui->peerWidget->setColumnWidth(PeerTableModel::ConnectionType, GUIUtil::TextWidth(fm, "Address Fetch"));
+        ui->peerWidget->setColumnWidth(PeerTableModel::Network, GUIUtil::TextWidth(fm, "NetworkW"));
+        ui->peerWidget->setColumnWidth(PeerTableModel::Sent, GUIUtil::TextWidth(fm, "1023 GBx"));
+        ui->peerWidget->setColumnWidth(PeerTableModel::Received, GUIUtil::TextWidth(fm, "1023 GBx"));
         ui->peerWidget->setColumnWidth(PeerTableModel::Subversion, SUBVERSION_COLUMN_WIDTH);
         ui->peerWidget->setColumnWidth(PeerTableModel::Ping, PING_COLUMN_WIDTH);
         ui->peerWidget->horizontalHeader()->setStretchLastSection(true);
