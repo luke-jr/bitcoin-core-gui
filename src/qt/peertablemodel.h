@@ -14,6 +14,7 @@
 #include <QStringList>
 
 class PeerTablePriv;
+class PlatformStyle;
 
 namespace interfaces {
 class Node;
@@ -50,7 +51,7 @@ class PeerTableModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit PeerTableModel(interfaces::Node& node, QObject* parent);
+    explicit PeerTableModel(interfaces::Node& node, const PlatformStyle&, QObject* parent);
     ~PeerTableModel();
     const CNodeCombinedStats *getNodeStats(int idx);
     int getRowByNodeId(NodeId nodeid);
@@ -85,6 +86,7 @@ public Q_SLOTS:
 
 private:
     interfaces::Node& m_node;
+    const PlatformStyle& m_platform_style;
     const QStringList columns{tr("Peer Id"), tr("Address"), tr("Direction"), tr("Type"), tr("Network"), tr("Ping"), tr("Sent"), tr("Received"), tr("User Agent")};
     std::unique_ptr<PeerTablePriv> priv;
     QTimer *timer;
